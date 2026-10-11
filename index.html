@@ -278,7 +278,7 @@ function ask(q){
 
   if(m){
     add(m[1]);
-  }else if(/\b(hi|hello|hey|hii)\b/.test(s)){
+  }else if(/^(hi|hello|hey|hii)[!. ]*$/.test(s)){
     add('Hey! 👋 Welcome to AI Corner. Ask me about AI, machine learning, bias, XP, or privacy!');
   }else if(/\b(thank|thanks|thank you)\b/.test(s)){
     add("You're welcome! 😊 Keep exploring AI Corner.");
