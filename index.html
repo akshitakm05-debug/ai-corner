@@ -366,4 +366,109 @@ async function testQuizConnection() {
   <button id="quiz-next" hidden>Next Question →</button>
   <p id="quiz-score">Questions answered: 0</p>
 </section>
+<script>
+const quizWorkerURL = "https://ai-corner-quiz.akshita-km05.workers.dev/";
+const quizStart = document.getElementById("quiz-start");
+const quizNext = document.getElementById("quiz-next");
+const quizQuestion = document.getElementById("quiz-question");
+const quizOptions = document.getElementById("quiz-options");
+const quizFeedback = document.getElementById("quiz-feedback");
+const quizScore = document.getElementById("quiz-score");
+
+let currentQuizQuestion = null;
+let answeredQuizIds = [];
+let answeredCount = 0;
+let quizLocked = false;
+
+async function loadQuizQuestion() {
+  quizStart.disabled = true;
+  quizNext.hidden = true;
+  quizFeedback.textContent = "Loading question...";
+  quizOptions.replaceChildren();
+  quizQuestion.textContent = "";
+
+  try {
+    const response = await fetch(quizWorkerURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        topic: document.getElementById("quiz-topic").value,
+        difficulty: document.getElementById("quiz-difficulty").value,
+        excludeIds: answeredQuizIds
+      })
+    });
+
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const data = await response.json();
+    const q = data.question || data;
+
+    if (!q.question || !Array.isArray(q.options) || !q.options.length) {
+      throw new Error(data.message || "No question returned. Check the Worker response.");
+    }
+
+    currentQuizQuestion = q;
+    quizLocked = false;
+    quizQuestion.textContent = q.question;
+    quizFeedback.textContent = "";
+
+    q.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = option.label || option.text || option.value || ("Option " + (index + 1));
+      button.style.cssText = "padding:12px;text-align:left;border:1px solid #c9bce9;border-radius:10px;cursor:pointer;";
+      button.addEventListener("click", () => chooseQuizAnswer(option, button));
+      quizOptions.appendChild(button);
+    });
+
+    quizStart.textContent = "Restart Quiz";
+  } catch (error) {
+    console.error("Quiz loading failed:", error);
+    quizFeedback.textContent = "Couldn't load a question. Please check the connection and try again.";
+  } finally {
+    quizStart.disabled = false;
+  }
+}
+
+function chooseQuizAnswer(option, chosenButton) {
+  if (quizLocked || !currentQuizQuestion) return;
+  quizLocked = true;
+
+  const correct = option.correct === true ||
+    option.isCorrect === true ||
+    option.value === currentQuizQuestion.answer ||
+    option.value === currentQuizQuestion.correctAnswer ||
+    option.label === currentQuizQuestion.answer;
+
+  if (correct) {
+    quizFeedback.textContent = "🎉 Correct! Well done!";
+    if (typeof award === "function" && currentQuizQuestion.id) {
+      award("bank-" + currentQuizQuestion.id, 5);
+    }
+  } else {
+    quizFeedback.textContent = "Not quite! Check the explanation if one is provided, then try another question.";
+  }
+
+  answeredCount++;
+  if (currentQuizQuestion.id) answeredQuizIds.push(currentQuizQuestion.id);
+  quizScore.textContent = "Questions answered: " + answeredCount;
+
+  Array.from(quizOptions.querySelectorAll("button")).forEach(button => {
+    button.disabled = true;
+    button.style.cursor = "default";
+  });
+
+  quizNext.hidden = false;
+}
+
+quizStart.addEventListener("click", () => {
+  answeredQuizIds = [];
+  answeredCount = 0;
+  quizScore.textContent = "Questions answered: 0";
+  loadQuizQuestion();
+});
+
+quizNext.addEventListener("click", loadQuizQuestion);
+</script>
+
 </body></html>
