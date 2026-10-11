@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Corner – Two Minds. Infinite Possibilities.</title>
+<style>
+:root{--bg:#0d0d12;--bg2:#17171f;--card:#1d1d28;--tx:#e9e9f2;--mu:#a3a3b8;--pu:#b36bff;--cy:#35e6ff;--ok:#5dffb0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 500px at 80% -10%,#3a1a6b55,transparent),var(--bg);color:var(--tx);font:17px/1.6 Georgia,"Times New Roman",serif}
+h1,h2,h3,nav,button,.sans{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif}
+h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.1;margin:.2em 0}
+h2{font-size:clamp(1.6rem,4vw,2.3rem);margin:0 0 .3em;color:var(--cy)}
+h3{margin:.2em 0;color:var(--pu)}
+p{max-width:70ch}
+section{max-width:1100px;margin:auto;padding:56px 20px}
+a{color:var(--cy)}
+:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:#000;padding:8px;z-index:99}
+nav{position:sticky;top:0;z-index:20;background:#0d0d12ee;backdrop-filter:blur(8px);border-bottom:1px solid #ffffff18;display:flex;gap:4px;overflow-x:auto;padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+nav b{color:var(--pu);padding:8px 10px;white-space:nowrap}
+nav a{color:var(--tx);text-decoration:none;padding:8px 12px;border-radius:8px;white-space:nowrap;font-size:.95rem}
+nav a:hover{background:#ffffff14}
+.btn,button{background:linear-gradient(135deg,var(--pu),#6b5bff);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 6px 4px 0}
+.btn.alt,button.alt{background:transparent;border:1px solid var(--cy);color:var(--cy)}
+.btn{display:inline-block;text-decoration:none}
+button:disabled{opacity:.5;cursor:default}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center;min-height:80vh}
+.tag{font-size:1.3rem;background:linear-gradient(90deg,var(--cy),var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.stat{background:var(--card);border:1px solid #ffffff18;border-radius:12px;padding:10px 18px;min-width:110px}
+.stat b{display:block;font-size:1.6rem;color:var(--cy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid #ffffff1a;border-radius:14px;padding:16px}
+.card:hover{border-color:var(--pu)}
+details.card summary{cursor:pointer;font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:700;color:var(--tx)}
+.opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid #ffffff22;margin:6px 0}
+.opt.good{border-color:var(--ok);background:#12382a}.opt.bad{border-color:#ff6b8a;background:#3a1620}
+.fb{margin-top:8px;color:var(--mu)}
+input,textarea,select{width:100%;background:var(--bg2);color:var(--tx);border:1px solid #ffffff33;border-radius:10px;padding:10px;font:inherit;margin:6px 0}
+.note{font-size:.9rem;color:var(--mu);border-left:3px solid var(--pu);padding-left:10px}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.95rem}
+th,td{border-bottom:1px solid #ffffff20;padding:10px;text-align:left;vertical-align:top}
+th{color:var(--cy);font-family:"Trebuchet MS",system-ui,sans-serif}
+.wrap{overflow-x:auto}
+.bar{height:10px;background:#ffffff1c;border-radius:6px;overflow:hidden;margin:4px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--pu));transition:width .5s}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.bd{padding:12px;border-radius:12px;background:var(--card);border:1px dashed #ffffff33;opacity:.5}
+.bd.on{opacity:1;border:1px solid var(--ok);box-shadow:0 0 14px #5dffb044}
+#fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;border-radius:30px;padding:14px 20px}
+#chat{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 32px));max-height:70vh;background:var(--bg2);border:1px solid var(--pu);border-radius:14px;z-index:30;display:none;flex-direction:column;padding:12px}
+#chat.open{display:flex}
+#log{overflow-y:auto;flex:1;min-height:140px;max-height:300px;font-size:.95rem}
+.m{margin:6px 0;padding:8px 10px;border-radius:10px;background:var(--card)}.m.u{background:#3a2a6b}
+.chips button{font-size:.8rem;padding:5px 10px;margin:2px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:#12382a;border:1px solid var(--ok);padding:8px 16px;border-radius:20px;display:none;z-index:40}
+footer{text-align:center;color:var(--mu);padding:30px 20px 90px;font-size:.9rem}
+.pulse{animation:p 3s ease-in-out infinite}@keyframes p{50%{opacity:.35}}
+@media(max-width:800px){.hero{grid-template-columns:1fr;min-height:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<a class="skip" href="#home">Skip to content</a>
+<nav aria-label="Main"><b>AI CORNER</b><a href="#home">Home</a><a href="#arena">Human vs AI</a><a href="#lab">Challenge Lab</a><a href="#fusion">Idea Fusion</a><a href="#boost">Brain Boost</a><a href="#explore">Explore AI</a><a href="#compare">Compare</a><a href="#progress">Progress</a></nav>
+<main>
+<section id="home" class="hero"><div>
+<p class="sans" style="color:var(--mu);margin:0">Welcome to AI Corner</p>
+<h1>AI CORNER</h1><div class="tag sans">Two Minds. Infinite Possibilities.</div>
+<p>Humans bring context, values and lived experience. AI brings speed and pattern spotting. Together, they can solve problems neither would solve as well alone. You are a guest here: no login, no sign-up.</p>
+<a class="btn" href="#lab">Enter the Lab</a><a class="btn alt" href="#explore">Explore AI</a>
+<div class="stats" aria-live="polite"><div class="stat"><b id="sC">0</b>Challenges done</div><div class="stat"><b id="sX">0</b>XP earned</div><div class="stat"><b id="sB">0</b>Badges unlocked</div></div>
+<p class="note" style="margin-top:16px">Privacy: your progress is saved only in this browser on your device. Nothing is sent anywhere. No analytics, no cookies, no outside scripts.</p>
+</div>
+<svg id="brain" viewBox="0 0 400 360" role="img" aria-label="Glowing human brain on the left connected to an AI network on the right"><defs><filter id="g"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<path d="M60 190c-30-40-5-100 45-100 20-35 80-40 100-5 40-5 55 40 30 70 20 30-5 70-40 65-15 30-60 30-75 0-30 10-55-10-60-30z" fill="#35e6ff10" stroke="#35e6ff" stroke-width="2.5" filter="url(#g)"/>
+<path d="M130 120c20 20 10 50 40 60M105 170c25-5 30 20 55 15M200 100c-10 30 15 40 5 70" fill="none" stroke="#35e6ff99" stroke-width="2"/>
+<g id="net" filter="url(#g)"></g></svg>
+</section>
+
+<section id="arena"><h2>Human vs AI Arena</h2><p>Pick the best answer. Neither side always wins: it depends on the task and context. Each right answer earns 10 XP.</p><div class="grid" id="aq"></div></section>
+
+<section id="lab"><h2>Human + AI Challenge Lab</h2><p>Six real problems. Open a challenge to see how human insight and AI help can combine. Mark it complete for 20 XP.</p><div class="grid" id="cl"></div></section>
+
+<section id="fusion"><h2>Idea Fusion Lab</h2>
+<p class="note">Sample mode: results come from simple built-in templates on this page. They are NOT from a real AI model, and nothing you type leaves your device. Please do not enter personal details.</p>
+<div class="card"><label for="fi">Your idea</label><textarea id="fi" rows="3" placeholder="Example: a weekly swap shelf for school books"></textarea>
+<label for="fc">Category</label><select id="fc"><option>education</option><option>environment</option><option>community</option><option>accessibility</option><option>productivity</option></select>
+<button id="fgo">Improve my idea</button><button class="alt" id="fcp" disabled>Copy results</button><span id="fm" class="fb"></span>
+<div class="out" id="fo" aria-live="polite"></div></div></section>
+
+<section id="boost"><h2>Daily Brain Boost</h2><p>Puzzles, riddles and one creative exercise. Correct answers earn 15 XP.</p><div class="grid" id="bq"></div></section>
+
+<section id="explore"><h2>Explore AI Universe</h2><p>Open each card for a plain-English explanation and a real-world example.</p><div class="grid" id="ex"></div></section>
+
+<section id="compare"><h2>Human–AI Comparison Dashboard</h2><p class="note">The bars are illustrative only, to show typical patterns. They are not measured data, and real results vary by task.</p>
+<div class="wrap"><table><thead><tr><th>Area</th><th>Human</th><th>AI</th><th>Together</th></tr></thead><tbody id="cb"></tbody></table></div></section>
+
+<section id="progress"><h2>Your Progress</h2><div class="card"><h3 id="lv">Explorer</h3><div class="bar" role="progressbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100" id="pb"><i id="pf" style="width:0"></i></div><p id="pt" class="fb"></p>
+<p class="fb">Levels: Explorer, Thinker (60 XP), Innovator (150 XP), AI Collaborator (250 XP).</p></div>
+<h3 style="margin-top:20px">Badges</h3><div class="badges" id="bg"></div>
+<p style="margin-top:20px"><button class="alt" id="rs">Reset Progress</button> <span class="fb">Clears XP and badges stored on this device.</span></p></section>
+</main>
+<footer>AI CORNER · A college innovation project · Progress is stored only on your device.<br>Built with help from Claude, an AI assistant by Anthropic.</footer>
+
+<button id="fab" aria-expanded="false" aria-controls="chat">Ask the Assistant</button>
+<div id="chat" role="dialog" aria-label="AI Corner Assistant (demo)"><h3 style="margin:0">AI Corner Assistant <small>(demo)</small></h3>
+<p class="note" style="margin:4px 0">Demo with ready-made answers. Not a live AI. Please don't share personal information.</p>
+<div id="log" aria-live="polite"></div><div class="chips" id="chips"></div>
+<div style="display:flex;gap:6px"><input id="ci" aria-label="Your question" placeholder="Ask about AI or this site"><button id="cs">Send</button></div><button class="alt" id="cc">Clear chat</button></div>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,h,c)=>{const e=document.createElement(t);e.innerHTML=h||'';if(c)e.className=c;return e};
+let S;try{S=JSON.parse(localStorage.getItem('aicorner'))}catch(e){}S=S&&S.done?S:{xp:0,done:{}};
+const save=()=>{try{localStorage.setItem('aicorner',JSON.stringify(S))}catch(e){}};
+const n=p=>Object.keys(S.done).filter(k=>k.startsWith(p)).length;
+const LV=[['Explorer',0],['Thinker',60],['Innovator',150],['AI Collaborator',250]];
+const BG=[['First Step','Earn your first XP',()=>n('')>0],['Arena Challenger','Get 4 Arena answers right',()=>n('a')>=4],['Lab Pioneer','Complete 3 challenges',()=>n('c')>=3],['Full Collaborator','Complete all 6 challenges',()=>n('c')>=6],['Puzzle Solver','Solve 3 Brain Boost puzzles',()=>n('p')>=3],['Idea Maker','Use the Idea Fusion Lab',()=>!!S.done.f],['Curious Mind','Open all 8 Explore cards',()=>n('e')>=8]];
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2200)}
+function award(id,xp){if(S.done[id])return false;S.done[id]=xp;S.xp+=xp;save();toast('+'+xp+' XP');render();return true}
+function render(){
+ const l=LV.filter(x=>S.xp>=x[1]).pop(),nx=LV[LV.findIndex(x=>x[0]==l[0])+1],on=BG.filter(b=>b[2]()).length;
+ $('#sC').textContent=n('c');$('#sX').textContent=S.xp;$('#sB').textContent=on;$('#lv').textContent='Level: '+l[0]+' · '+S.xp+' XP';
+ const pc=nx?Math.round((S.xp-l[1])/(nx[1]-l[1])*100):100;$('#pf').style.width=pc+'%';$('#pb').setAttribute('aria-valuenow',pc);
+ $('#pt').textContent=nx?(nx[1]-S.xp)+' XP to '+nx[0]+'. Challenges completed: '+n('c')+' of 6.':'Top level reached. Challenges completed: '+n('c')+' of 6.';
+ $('#bg').innerHTML='';BG.forEach(b=>{const d=E('div','<b>'+b[0]+'</b><br><span class="fb">'+b[1]+'</span>','bd'+(b[2]()?' on':''));$('#bg').append(d)});
+ document.querySelectorAll('[data-c]').forEach(b=>{const d=S.done['c'+b.dataset.c];b.disabled=!!d;b.textContent=d?'Completed ✓':'Mark as completed'});
+}
+// brain network
+(()=>{let h='',P=[];for(let i=0;i<16;i++)P.push([230+(i%4)*45+(i*7%13),70+Math.floor(i/4)*65+(i*11%17)]);
+P.forEach((a,i)=>P.forEach((b,j)=>{if(j>i&&Math.hypot(a[0]-b[0],a[1]-b[1])<90)h+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#b36bff88"/>`}));
+[[150,150],[170,180],[130,120]].forEach(a=>h+=`<line x1="${a[0]}" y1="${a[1]}" x2="${P[0][0]}" y2="${P[0][1]+(a[1]-100)}" stroke="#35e6ff55" stroke-dasharray="4"/>`);
+P.forEach((a,i)=>h+=`<circle class="pulse" style="animation-delay:${i*.2}s" cx="${a[0]}" cy="${a[1]}" r="5" fill="#b36bff"/>`);$('#net').innerHTML=h})();
+// arena
+const AQ=[
+['Creativity: which statement is most accurate?',['AI can never help with creative work','Humans bring lived experience and intent; AI can quickly offer many variations','Only AI can be original'],1,'Humans add meaning, taste and personal context. AI can suggest many options fast. Many creators use both: human direction, AI drafts.'],
+['Reasoning: a hospital wants to flag risky patient test results. What works best?',['AI flags unusual results; a doctor reviews and decides','AI alone decides treatment','Skip tools and check nothing'],0,'AI can scan lots of data consistently, but doctors understand the whole patient. Review by a person keeps decisions safe.'],
+['Pattern recognition: finding tiny trends across millions of records is usually...',['Easier for AI tools','Impossible for any tool','Only possible by hand'],0,'Computers handle huge datasets well. But humans still decide whether a pattern is meaningful or just a coincidence.'],
+['Decision-making: should a school use AI to decide who gets a scholarship?',['Yes, fully automatic, since AI is neutral','AI may help sort data, but people should decide and check for bias','AI should never be used for anything'],1,'AI learns from past data, which can contain bias. High-impact decisions need human judgment, fairness checks and a way to appeal.'],
+['Emotional understanding: a friend is grieving. Who is better placed to comfort them?',['A person who knows and cares about them','A spreadsheet','A random chatbot answer'],0,'Real care comes from relationships and shared experience. AI can offer information or help draft a kind message, but it does not feel emotions.'],
+['Responsible AI use: you get an AI answer with a surprising fact. What should you do?',['Trust it, it sounds confident','Check it against reliable sources first','Share it right away'],1,'AI can sound sure and still be wrong. Always verify important facts and be honest when AI helped you.']];
+AQ.forEach((q,i)=>{const c=E('div','<h3>'+['Creativity','Reasoning','Pattern recognition','Decision-making','Emotional understanding','Responsible AI'][i]+'</h3><p>'+q[0]+'</p>','card'),f=E('div','','fb');f.setAttribute('aria-live','polite');
+ q[1].forEach((o,j)=>{const b=E('button',o,'opt');b.onclick=()=>{if(c.dataset.d)return;c.dataset.d=1;b.classList.add(j==q[2]?'good':'bad');if(j!=q[2])c.querySelectorAll('.opt')[q[2]].classList.add('good');f.textContent=(j==q[2]?'Correct! ':'Not quite. ')+q[3];if(j==q[2])award('a'+i,10)};c.append(b)});c.append(f);$('#aq').append(c)});
+// lab
+const CH=[['Food waste reduction','Shops and homes throw away edible food.','Staff know which items sell slowly and which neighbours need food.','Predict demand from past sales and suggest discounts or donation timing.','A shop uses AI forecasts, then staff pick donation partners and set prices.','Benefit: less waste. Limit: forecasts miss sudden events. Be responsible: keep staff in charge and protect customer data.'],
+['Accessible education','Students with different needs struggle with one-size lessons.','Teachers know each learner’s needs, language and home situation.','Convert text to speech, simplify wording, and suggest practice sets.','Teachers choose goals; AI prepares accessible versions that teachers review.','Benefit: more students can take part. Limit: simplified text may lose nuance. Be responsible: ask learners for feedback.'],
+['Water conservation','Water is lost to leaks and overuse.','Residents know local habits, seasons and old pipes.','Spot unusual usage in meter data and flag likely leaks.','Residents report problems and AI highlights where to check first.','Benefit: faster fixes. Limit: sensors cost money and can fail. Be responsible: use anonymous, area-level data.'],
+['Sustainable agriculture','Farmers must save water and fertiliser while keeping yields.','Farmers know their soil, crops and weather history.','Analyse weather and soil readings to suggest watering schedules.','The farmer reviews AI suggestions and adjusts with field experience.','Benefit: lower costs. Limit: advice may not fit every field. Be responsible: the farmer keeps the final decision.'],
+['Environmental protection','Litter and pollution harm local rivers and parks.','Volunteers know which spots are polluted and why.','Sort volunteer photos and map hotspots.','Volunteers report; AI maps patterns; the community plans clean-ups.','Benefit: focused action. Limit: photos can be misread. Be responsible: avoid photographing people.'],
+['Everyday productivity','Study and work tasks pile up and deadlines slip.','You know your energy, priorities and what really matters.','Draft a study plan, summarise notes, and suggest task order.','You set priorities; AI drafts a schedule that you edit.','Benefit: less planning stress. Limit: plans can be unrealistic. Be responsible: check summaries against your notes.']];
+CH.forEach((c,i)=>{const d=E('details','<summary>'+c[0]+'</summary><p><b>The problem:</b> '+c[1]+'</p><p><b>Human insight:</b> '+c[2]+'</p><p><b>AI assistance:</b> '+c[3]+'</p><p><b>Combined solution:</b> '+c[4]+'</p><p class="note">'+c[5]+'</p>','card');
+ const b=E('button','Mark as completed');b.dataset.c=i;b.onclick=()=>award('c'+i,20);d.append(b);$('#cl').append(d)});
+// fusion
+const FT={education:['Ask a few learners what they find hardest and when they study best.','Suggest practice questions and simpler explanations at different levels.','a flexible learning path built around real learner feedback, with AI-made practice and a teacher checking quality'],
+environment:['Observe the local place and talk to people who use it daily.','Help map patterns, estimate impact and draft awareness posters.','a community-led action plan with AI-assisted maps and progress tracking'],
+community:['Listen to neighbours about what they truly need and who may be left out.','Help organise schedules, translate messages and summarise feedback.','a neighbour-led service where AI handles the paperwork and people keep the relationships'],
+accessibility:['Include people with disabilities in design from the start.','Offer captions, text-to-speech, or simplified text as options.','accessible features co-designed with users and tested by them before launch'],
+productivity:['Decide what matters most and what is realistic for you.','Draft schedules, checklists and summaries you can edit.','a personal routine where you set priorities and AI drafts the plan']};
+let fx='';
+$('#fgo').onclick=()=>{const i=$('#fi').value.trim();if(i.length<4){$('#fm').textContent='Please type an idea first.';return}
+ const t=FT[$('#fc').value];$('#fm').textContent='';
+ const H=['Human Insight: '+t[0]+' For "'+i+'", think about who it helps and what they already know.','AI Contribution: '+t[1]+' AI could also list risks and similar ideas to compare.','Combined Innovation: '+i+' becomes '+t[2]+'.'];
+ fx='AI CORNER – Idea Fusion (sample response, not from a real AI model)\n\n'+H.join('\n\n');
+ $('#fo').innerHTML='';H.forEach(h=>{const k=h.indexOf(':');$('#fo').append(E('div','<h3>'+h.slice(0,k)+'</h3>'+h.slice(k+1).replace(/[<>&]/g,m=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[m])),'card'))});
+ $('#fo').append(E('p','Sample response from built-in templates.','note'));$('#fcp').disabled=false;award('f',10)};
+$('#fcp').onclick=async()=>{try{await navigator.clipboard.writeText(fx);$('#fm').textContent='Copied.'}catch(e){const a=E('textarea');a.value=fx;document.body.append(a);a.select();try{document.execCommand('copy');$('#fm').textContent='Copied.'}catch(x){$('#fm').textContent='Copy failed. Select the text manually.'}a.remove()}};
+// brain boost
+const BQ=[['Riddle','I have keys but open no locks, and I have space but no room. What am I?',['keyboard'],'Hint: you are probably using one.','A keyboard has keys, a space bar, and no rooms.'],
+['Number pattern','What comes next: 2, 6, 12, 20, ?',['30'],'Hint: look at the gaps between numbers.','The gaps are 4, 6, 8, so the next gap is 10 and 20 + 10 = 30.'],
+['Reasoning','A farmer has 17 sheep. All but 9 run away. How many are left?',['9','nine'],'Hint: read “all but 9” slowly.','“All but 9” means 9 stay, so 9 are left.'],
+['Logic','5 machines make 5 widgets in 5 minutes. How many minutes for 100 machines to make 100 widgets?',['5','five'],'Hint: how long does one machine take for one widget?','Each machine makes 1 widget in 5 minutes, so 100 machines make 100 widgets in 5 minutes.'],
+['Creative exercise','Write 3 new uses for an old umbrella.',null,'Hint: think beyond rain, like shade, a tent, or a plant support.','There is no single right answer. Combine your idea with AI by asking it for 10 more, then pick the one that fits your life.']];
+BQ.forEach((q,i)=>{const c=E('div','<h3>'+q[0]+'</h3><p>'+q[1]+'</p>','card'),inp=E(q[2]?'input':'textarea');inp.setAttribute('aria-label','Your answer');if(!q[2])inp.rows=3;const f=E('div','','fb');f.setAttribute('aria-live','polite');
+ const go=E('button',q[2]?'Check answer':'Submit'),hn=E('button','Hint','alt'),sh=E('button','Show explanation','alt');
+ go.onclick=()=>{const v=inp.value.trim().toLowerCase();if(q[2]?q[2].includes(v):v.length>=10){f.textContent=(q[2]?'Correct! ':'Nice thinking! ')+q[4];award('p'+i,15)}else f.textContent=q[2]?'Not yet. Try the hint.':'Write a bit more (at least 10 characters).'};
+ hn.onclick=()=>f.textContent=q[3];sh.onclick=()=>f.textContent=q[4];c.append(inp,go,hn,sh,f);$('#bq').append(c)});
+// explore
+const EX=[['Artificial Intelligence','Computer systems that do tasks that normally need human thinking, like recognising speech.','A phone assistant that sets alarms when you ask.'],
+['Machine Learning','A way for computers to learn patterns from examples instead of following only fixed rules.','Email spam filters learn from messages people mark as spam.'],
+['Generative AI','AI that creates new text, images or audio based on patterns it learned.','Making a draft poster from a short description.'],
+['Large Language Models','AI trained on huge amounts of text to predict and write language. They can be wrong while sounding sure.','A chatbot that explains a topic or drafts an email.'],
+['AI Ethics and Bias','Ethics asks what is fair and safe. Bias happens when AI learns unfair patterns from its data.','A hiring tool trained on past hires may unfairly favour one group.'],
+['Responsible AI','Building and using AI with fairness, privacy, transparency, safety and human oversight.','A hospital that lets doctors review every AI suggestion.'],
+['AI and Creativity','AI can remix patterns and offer ideas, while people provide purpose, taste and meaning.','A musician asks AI for chord ideas, then writes the song.'],
+['Human–AI Collaboration','People and AI each do what they do best, with humans keeping responsibility.','A farmer uses AI weather forecasts and decides when to plant.']];
+EX.forEach((x,i)=>{const d=E('details','<summary>'+x[0]+'</summary><p>'+x[1]+'</p><p class="note"><b>Real-world example:</b> '+x[2]+'</p>','card');d.ontoggle=()=>{if(d.open)award('e'+i,5)};$('#ex').append(d)});
+// compare
+[['Creativity','Original ideas from lived experience','Fast variations from learned patterns','Human direction + AI drafts',90,70],['Speed','Slower, limited by time','Very fast on large tasks','AI speeds up first drafts',35,95],['Contextual understanding','Strong with culture and situation','Can miss unstated context','Humans supply context',90,50],['Pattern analysis','Good at small sets, tires on big ones','Strong on large data','AI finds, humans interpret',55,90],['Empathy','Real feelings and care','Can imitate caring words only','Humans lead; AI helps with wording',95,25],['Consistency','Varies with mood and fatigue','Steady, but repeats errors too','AI checks, humans review',55,85],['Accountability','Can be responsible and explain choices','Cannot be held responsible','A named human owns the outcome',95,10]].forEach(r=>{
+ const t=E('tr','<td><b>'+r[0]+'</b></td><td>'+r[1]+'<div class="bar" aria-hidden="true"><i style="width:'+r[4]+'%"></i></div></td><td>'+r[2]+'<div class="bar" aria-hidden="true"><i style="width:'+r[5]+'%"></i></div></td><td>'+r[3]+'</td>');$('#cb').append(t)});
+$('#rs').onclick=()=>{if(confirm('Reset all XP, badges and progress on this device?')){S={xp:0,done:{}};try{localStorage.removeItem('aicorner')}catch(e){}location.reload()}};
+// chat
+const R=[[/ai corner|site|website|navigate|start|where/,'Use the menu at the top. Try the Challenge Lab first, then the Arena and Brain Boost to earn XP.'],[/machine learning|ml/,'Machine learning lets computers find patterns in examples instead of following only fixed rules.'],[/generative|llm|language model/,'Generative AI creates new text or images from learned patterns. Large language models do this with text, and they can be wrong, so always check important facts.'],[/bias|ethic|fair/,'Bias happens when AI learns unfair patterns from its data. Checking data, testing for fairness and keeping humans in charge helps.'],[/responsible/,'Responsible AI means fairness, privacy, transparency, safety and human oversight.'],[/xp|level|badge|progress/,'You earn XP by answering Arena questions, finishing challenges, solving puzzles and exploring cards. Check the Progress section.'],[/privacy|data|safe|cookie/,'Your progress stays in this browser only. Nothing is sent to a server, and there is no tracking.'],[/what is ai|artificial|^ai$/,'AI is software that does tasks that usually need human thinking, such as recognising speech or images.'],[/collab|together|human/,'Human–AI collaboration means each does what it does best: humans give context and values, AI gives speed and patterns.']];
+const lg=$('#log'),add=(t,u)=>{const m=E('div','','m'+(u?' u':''));m.textContent=t;lg.append(m);lg.scrollTop=lg.scrollHeight};
+const hi=()=>{lg.innerHTML='';add('Hi! I am a demo assistant with ready-made answers, not a live AI. Ask about AI basics or how to use this site.')};hi();
+['What is AI?','What is bias?','How do I earn XP?','Is my data safe?'].forEach(q=>{const b=E('button',q,'alt');b.onclick=()=>ask(q);$('#chips').append(b)});
+function ask(q){q=q.trim();if(!q)return;add(q,1);const m=R.find(r=>r[0].test(q.toLowerCase()));add(m?m[1]:'I only know a few topics in this demo: AI basics, machine learning, bias, XP and privacy. Try the Explore AI Universe section.');$('#ci').value=''}
+$('#cs').onclick=()=>ask($('#ci').value);$('#ci').onkeydown=e=>{if(e.key=='Enter')ask($('#ci').value)};$('#cc').onclick=hi;
+$('#fab').onclick=()=>{const o=$('#chat').classList.toggle('open');$('#fab').setAttribute('aria-expanded',o)};
+document.onkeydown=e=>{if(e.key=='Escape'&&$('#chat').classList.contains('open'))$('#fab').click()};
+render();
+</script></body></html>
