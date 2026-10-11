@@ -265,7 +265,8 @@ EX.forEach((x,i)=>{const d=E('details','<summary>'+x[0]+'</summary><p>'+x[1]+'</
 $('#rs').onclick=()=>{if(confirm('Reset all XP, badges and progress on this device?')){S={xp:0,done:{}};try{localStorage.removeItem('aicorner')}catch(e){}location.reload()}};
 // chat
 const R=[
-[/tell abt|tell me about|about your website|about this website|about ai corner|website|site/i,'AI Corner is an interactive AI-learning website! Explore Human vs AI, Challenge Lab, Idea Fusion, Brain Boost, and Explore AI. Learn AI concepts, try challenges, earn XP, and explore creative ideas. The assistant uses predefined answers, not live AI.'],
+[/tell abt u|tell me about yourself|who are you|about you/i,'I am the AI Corner demo assistant! 🤖 I can answer selected questions about AI, machine learning, bias, privacy, XP, and this website. I use ready-made responses, not live AI.'],
+[/tell abt (the )?(website|site)|tell me about (the )?(website|site|ai corner)|about (your )?(website|site|ai corner)/i,'AI Corner is an interactive AI-learning website! Explore Human vs AI, Challenge Lab, Idea Fusion, Brain Boost, and Explore AI. Learn AI concepts, try challenges, earn XP, and explore creative ideas. The assistant uses predefined answers, not live AI.'],
 [/machine learning|ml/,'Machine learning lets computers find patterns in examples instead of following only fixed rules.'],
 [/generative|llm|language model/,'Generative AI creates new text or images from learned patterns. Large language models do this with text, and they can be wrong, so always check important facts.'],
 [/bias|ethic|fair/,'Bias happens when AI learns unfair patterns from its data. Checking data, testing for fairness and keeping humans in charge helps.'],
