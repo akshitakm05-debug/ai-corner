@@ -59,6 +59,81 @@ footer{text-align:center;color:var(--mu);padding:30px 20px 90px;font-size:.9rem}
 .pulse{animation:p 3s ease-in-out infinite}@keyframes p{50%{opacity:.35}}
 @media(max-width:800px){.hero{grid-template-columns:1fr;min-height:0}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+ 
+/* ===== AI CORNER POLISH ===== */
+
+:root {
+  --glow-purple: #a78bfa;
+  --glow-cyan: #67e8f9;
+}
+
+::selection {
+  background: #8b5cf680;
+  color: #ffffff;
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+button,
+.btn,
+a.btn {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+button:hover,
+.btn:hover,
+a.btn:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 0 18px #a78bfa35;
+}
+
+button:active,
+.btn:active {
+  transform: scale(0.98);
+}
+
+.card,
+.bd,
+.stat {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card:hover,
+.bd.on:hover {
+  border-color: var(--glow-cyan);
+  box-shadow: 0 0 18px #67e8f920;
+}
+
+:focus-visible {
+  outline: 2px solid var(--glow-cyan);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  section {
+    padding: 36px 16px;
+  }
+
+  #fab {
+    right: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+
 </style></head><body>
 <a class="skip" href="#home">Skip to content</a>
 <nav aria-label="Main"><b>AI CORNER</b><a href="#home">Home</a><a href="#arena">Human vs AI</a><a href="#lab">Challenge Lab</a><a href="#fusion">Idea Fusion</a><a href="#boost">Brain Boost</a><a href="#explore">Explore AI</a><a href="#compare">Compare</a><a href="#progress">Progress</a></nav>
