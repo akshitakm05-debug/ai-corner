@@ -312,7 +312,6 @@ $('#cs').onclick=()=>ask($('#ci').value);$('#ci').onkeydown=e=>{if(e.key=='Enter
 $('#fab').onclick=()=>{const o=$('#chat').classList.toggle('open');$('#fab').setAttribute('aria-expanded',o)};
 document.onkeydown=e=>{if(e.key=='Escape'&&$('#chat').classList.contains('open'))$('#fab').click()};
 render();
-
 const WORKER_URL = "https://ai-corner-quiz.akshita-km05.workers.dev/";
 
 async function testQuizConnection() {
@@ -335,5 +334,36 @@ async function testQuizConnection() {
     toast("Connection failed. Check the Worker URL and settings.");
   }
 }
+</script>
+ <!-- QUIZ ARENA GOES HERE -->
+ 
+<section id="quiz-arena" style="max-width:800px;margin:30px auto;padding:24px;border-radius:18px;background:#f3efff;color:#29213d;font-family:Arial,sans-serif;">
+  <h2>🎯 AI Corner Quiz Arena</h2>
+  <p>Test your skills across programming, AI and technology!</p>
 
-</script></body></html>
+  <label for="quiz-topic">Choose a topic:</label>
+  <select id="quiz-topic">
+    <option>AI & Machine Learning</option>
+    <option>C Programming</option>
+    <option>Python</option>
+    <option>Java</option>
+    <option>Logical Reasoning</option>
+    <option>Computer Fundamentals</option>
+    <option>General Technology</option>
+  </select>
+
+  <label for="quiz-difficulty">Difficulty:</label>
+  <select id="quiz-difficulty">
+    <option>Easy</option>
+    <option>Medium</option>
+    <option>Hard</option>
+  </select>
+
+  <button id="quiz-start">Start Quiz</button>
+  <div id="quiz-question"></div>
+  <div id="quiz-options"></div>
+  <p id="quiz-feedback" aria-live="polite"></p>
+  <button id="quiz-next" hidden>Next Question →</button>
+  <p id="quiz-score">Questions answered: 0</p>
+</section>
+</body></html>
