@@ -312,4 +312,28 @@ $('#cs').onclick=()=>ask($('#ci').value);$('#ci').onkeydown=e=>{if(e.key=='Enter
 $('#fab').onclick=()=>{const o=$('#chat').classList.toggle('open');$('#fab').setAttribute('aria-expanded',o)};
 document.onkeydown=e=>{if(e.key=='Escape'&&$('#chat').classList.contains('open'))$('#fab').click()};
 render();
+
+const WORKER_URL = "https://ai-corner-quiz.akshita-km05.workers.dev/";
+
+async function testQuizConnection() {
+  try {
+    const response = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ test: true })
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    console.log("AI Corner Worker response:", data);
+    toast("Worker connection successful!");
+  } catch (error) {
+    console.error("Worker connection failed:", error);
+    toast("Connection failed. Check the Worker URL and settings.");
+  }
+}
+
 </script></body></html>
