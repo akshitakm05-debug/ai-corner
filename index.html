@@ -264,7 +264,19 @@ EX.forEach((x,i)=>{const d=E('details','<summary>'+x[0]+'</summary><p>'+x[1]+'</
  const t=E('tr','<td><b>'+r[0]+'</b></td><td>'+r[1]+'<div class="bar" aria-hidden="true"><i style="width:'+r[4]+'%"></i></div></td><td>'+r[2]+'<div class="bar" aria-hidden="true"><i style="width:'+r[5]+'%"></i></div></td><td>'+r[3]+'</td>');$('#cb').append(t)});
 $('#rs').onclick=()=>{if(confirm('Reset all XP, badges and progress on this device?')){S={xp:0,done:{}};try{localStorage.removeItem('aicorner')}catch(e){}location.reload()}};
 // chat
-const R=[[/ai corner|site|website|navigate|start|where/,'Use the menu at the top. Try the Challenge Lab first, then the Arena and Brain Boost to earn XP.'],[/machine learning|ml/,'Machine learning lets computers find patterns in examples instead of following only fixed rules.'],[/generative|llm|language model/,'Generative AI creates new text or images from learned patterns. Large language models do this with text, and they can be wrong, so always check important facts.'],[/bias|ethic|fair/,'Bias happens when AI learns unfair patterns from its data. Checking data, testing for fairness and keeping humans in charge helps.'],[/responsible/,'Responsible AI means fairness, privacy, transparency, safety and human oversight.'],[/xp|level|badge|progress/,'You earn XP by answering Arena questions, finishing challenges, solving puzzles and exploring cards. Check the Progress section.'],[/privacy|data|safe|cookie/,'Your progress stays in this browser only. Nothing is sent to a server, and there is no tracking.'],[/what is ai|artificial|^ai$/,'AI is software that does tasks that usually need human thinking, such as recognising speech or images.'],[/collab|together|human/,'Human–AI collaboration means each does what it does best: humans give context and values, AI gives speed and patterns.']];
+const R=[
+[/\b(tell me about|about)\b.*\b(website|site|ai corner)\b|\b(what is|describe)\b.*\b(ai corner|this website|this site)\b/i,'AI Corner is an interactive learning website about Artificial Intelligence. Explore Human vs AI, Challenge Lab, Idea Fusion, Brain Boost, and Explore AI. You can learn concepts, try challenges, earn XP, and explore ideas. It uses a demo assistant with ready-made answers, not a live AI model.'],
+[/ai corner|site|website|navigate|start|where/i,'Use the menu at the top. Try the Challenge Lab first, then the Arena and Brain Boost to earn XP.'],
+[/machine learning|ml/,'Machine learning lets computers find patterns in examples instead of following only fixed rules.'],
+[/generative|llm|language model/,'Generative AI creates new text or images from learned patterns. Large language models do this with text, and they can be wrong, so always check important facts.'],
+[/bias|ethic|fair/,'Bias happens when AI learns unfair patterns from its data. Checking data, testing for fairness and keeping humans in charge helps.'],
+[/responsible/,'Responsible AI means fairness, privacy, transparency, safety and human oversight.'],
+[/xp|level|badge|progress/,'You earn XP by answering Arena questions, finishing challenges, solving puzzles and exploring cards. Check the Progress section.'],
+[/privacy|data|safe|cookie/,'Your progress stays in this browser only. Nothing is sent to a server, and there is no tracking.'],
+[/what is ai|artificial|^ai$/,'AI is software that does tasks that usually need human thinking, such as recognising speech or images.'],
+[/collab|together|human/,'Human–AI collaboration means each does what it does best: humans give context and values, AI gives speed and patterns.']
+];
+
 const lg=$('#log'),add=(t,u)=>{const m=E('div','','m'+(u?' u':''));m.textContent=t;lg.append(m);lg.scrollTop=lg.scrollHeight};
 const hi=()=>{lg.innerHTML='';add('Hi! I am a demo assistant with ready-made answers, not a live AI. Ask about AI basics or how to use this site.')};hi();
 ['What is AI?','What is bias?','How do I earn XP?','Is my data safe?'].forEach(q=>{const b=E('button',q,'alt');b.onclick=()=>ask(q);$('#chips').append(b)});
