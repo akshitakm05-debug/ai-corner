@@ -268,7 +268,34 @@ const R=[[/ai corner|site|website|navigate|start|where/,'Use the menu at the top
 const lg=$('#log'),add=(t,u)=>{const m=E('div','','m'+(u?' u':''));m.textContent=t;lg.append(m);lg.scrollTop=lg.scrollHeight};
 const hi=()=>{lg.innerHTML='';add('Hi! I am a demo assistant with ready-made answers, not a live AI. Ask about AI basics or how to use this site.')};hi();
 ['What is AI?','What is bias?','How do I earn XP?','Is my data safe?'].forEach(q=>{const b=E('button',q,'alt');b.onclick=()=>ask(q);$('#chips').append(b)});
-function ask(q){q=q.trim();if(!q)return;add(q,1);const m=R.find(r=>r[0].test(q.toLowerCase()));add(m?m[1]:'I only know a few topics in this demo: AI basics, machine learning, bias, XP and privacy. Try the Explore AI Universe section.');$('#ci').value=''}
+function ask(q){
+  q=q.trim();
+  if(!q)return;
+  add(q,1);
+
+  const s=q.toLowerCase();
+  const m=R.find(r=>r[0].test(s));
+
+  if(m){
+    add(m[1]);
+  }else if(/\b(hi|hello|hey|hii)\b/.test(s)){
+    add('Hey! 👋 Welcome to AI Corner. Ask me about AI, machine learning, bias, XP, or privacy!');
+  }else if(/\b(thank|thanks|thank you)\b/.test(s)){
+    add("You're welcome! 😊 Keep exploring AI Corner.");
+  }else if(/\b(help|topics|what can you do)\b/.test(s)){
+    add('I can help with AI basics, machine learning, bias, XP, privacy, and navigating AI Corner. Try asking me about one of these!');
+  }else if(/\b(privacy|private|data|personal information)\b/.test(s)){
+    add('🔒 AI Corner is designed for guest-only use. This assistant uses predefined JavaScript responses, not a live AI service. Avoid entering personal information.');
+  }else if(/\b(machine learning|learns from data)\b/.test(s)){
+    add('Machine learning is a type of AI that finds patterns in data to make predictions or decisions. For example, it can learn to recognise spam emails.');
+  }else if(/\bwhat is ai|artificial intelligence\b/.test(s)){
+    add('AI stands for Artificial Intelligence. It helps computers perform tasks such as recognising images, understanding language, and solving problems.');
+  }else{
+    add('Hmm, I do not have a ready-made answer for that yet! 🤖 Try asking about AI basics, machine learning, bias, XP, privacy, or type "help" to see my topics.');
+  }
+
+  $('#ci').value='';
+}
 $('#cs').onclick=()=>ask($('#ci').value);$('#ci').onkeydown=e=>{if(e.key=='Enter')ask($('#ci').value)};$('#cc').onclick=hi;
 $('#fab').onclick=()=>{const o=$('#chat').classList.toggle('open');$('#fab').setAttribute('aria-expanded',o)};
 document.onkeydown=e=>{if(e.key=='Escape'&&$('#chat').classList.contains('open'))$('#fab').click()};
